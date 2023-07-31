@@ -1,0 +1,73 @@
+.totalButton {
+    background: black;
+    width: 350px !important;
+    border-radius: 6px;
+    color: #61ff61;
+    padding: 50px;
+    display: flex;
+    font-size: xxx-large;
+    font-weight: 800;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+}
+
+.mainHeading {
+    font-family: 'Roboto', sans-serif;
+}
+
+.print {
+    background: #0ff20f;
+    width: 350px !important;
+    border-radius: 6px;
+    color: black;
+    cursor: pointer;
+    padding: 50px;
+    display: flex;
+    font-weight: 800;
+    font-size: 60px;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+}
+
+.totalReturn {
+    background: red;
+    width: 285px !important;
+    border-radius: 6px;
+    color: white;
+    padding: 39px;
+    display: flex;
+    font-size: xxx-large;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+}
+
+.change {
+    background: blue;
+    width: 285px !important;
+    border-radius: 6px;
+    color: white;
+    padding: 39px;
+    display: flex;
+    font-size: xxx-large;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+}
+
+
+.totalBox {
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+}
+
+.lableTotal {
+    font-size: 16px;
+    text-align: left;
+    margin-right: 90px !important;
+    font-weight: 600;
+    color: black;
+}
