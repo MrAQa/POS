@@ -88,7 +88,21 @@ export default function LoginPage() {
     }
 
 
-
+    const removeItemByIndex = (index) => {
+        // Make a copy of the original array using spread operator
+        const newArray = [...SelectProducts];
+      
+        // Check if the index is within the array bounds
+        if (index >= 0 && index < newArray.length) {
+          // Use splice() method to remove the item at the specified index
+          newArray.splice(index, 1);
+      
+          // Update the state with the modified array
+          setSelectProducts(newArray);
+        } else {
+          console.error("Invalid index.");
+        }
+      };
 
     const calculateTotal = () => {
         if (!SelectProducts || SelectProducts.length === 0) {
@@ -101,12 +115,12 @@ export default function LoginPage() {
 
         return totalPrice.toFixed(2); // Return the total price with two decimal places
     };
+
     const calculateTotalPrice = (product, index, name) => {
 
         const newPrice = Number(product.quantity) * Number(product.price);
         return newPrice.toString();
     }
-
 
     const quantityChange = (e, index) => {
         console.log(e.target.value)
@@ -138,7 +152,7 @@ export default function LoginPage() {
     });
 
     const handle = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
 
         handlePrint()
     }
@@ -182,7 +196,10 @@ export default function LoginPage() {
         }
     };
 
-
+const resetAll = ()=> {
+setSelectProducts([])
+setChangeValue(0)
+}
 
     return (
         <>
@@ -207,6 +224,8 @@ export default function LoginPage() {
                             <Grid item xs={4}>
                                 <Item>
                                     <div style={{ height: '300px', overflowY: 'auto' }}>
+                                    <a href='#' onClick={resetAll}>Reset All</a>
+                                        
                                         <table className="table table-sm table-dark">
                                             <thead>
                                                 <tr>
@@ -214,6 +233,7 @@ export default function LoginPage() {
                                                     <th className="col">Title</th>
                                                     <th className="col">Quantity</th>
                                                     <th className="col">Price</th>
+                                                    <th className="col">clear</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -228,6 +248,8 @@ export default function LoginPage() {
 
                                                                 {/* <input type='text' name="price" style={{ width: '80px', textAlign: 'center' }} defaultValue={calculateTotalPrice(item, index, 'price')} maxLength={3} max={3} /> */}
                                                             </td>
+                                                            <td style={{cursor:'pointer'}} ><Button style={{color:'white'}} onClick={()=>removeItemByIndex(index)}>X</Button></td>
+
                                                         </tr>
                                                     )
                                                 })}

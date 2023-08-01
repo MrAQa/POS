@@ -103,7 +103,7 @@ export default function DashboardAppPage() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Daily Sales" total={Number(TotaSum?.Juice) + Number(TotaSum?.Chai) + Number(TotaSum?.Food) + Number(TotaSum?.Others)} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="Daily Sales" total={Number(TotaSum?.Juice ? TotaSum?.Juice : 0 ) + Number(TotaSum?.Chai ? TotaSum?.Chai : 0 ) + Number(TotaSum?.Food ? TotaSum?.Food : 0 ) + Number(TotaSum?.Others ? TotaSum?.Others : 0 )} icon={'ant-design:android-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
