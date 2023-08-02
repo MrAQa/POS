@@ -91,18 +91,18 @@ export default function LoginPage() {
     const removeItemByIndex = (index) => {
         // Make a copy of the original array using spread operator
         const newArray = [...SelectProducts];
-      
+
         // Check if the index is within the array bounds
         if (index >= 0 && index < newArray.length) {
-          // Use splice() method to remove the item at the specified index
-          newArray.splice(index, 1);
-      
-          // Update the state with the modified array
-          setSelectProducts(newArray);
+            // Use splice() method to remove the item at the specified index
+            newArray.splice(index, 1);
+
+            // Update the state with the modified array
+            setSelectProducts(newArray);
         } else {
-          console.error("Invalid index.");
+            console.error("Invalid index.");
         }
-      };
+    };
 
     const calculateTotal = () => {
         if (!SelectProducts || SelectProducts.length === 0) {
@@ -152,10 +152,48 @@ export default function LoginPage() {
     });
 
     const handle = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
 
         handlePrint()
     }
+
+    const addBIllwithoutPrint = (e) => {
+        e.preventDefault()
+        const currentDate = new Date();
+        const options = {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            // hour: '2-digit',
+            // minute: '2-digit',
+            // second: '2-digit',
+            timeZone: 'Asia/Karachi', // PKT time zone
+        };
+        const formattedTime = new Intl.DateTimeFormat('en-US', options).format(currentDate);
+        console.log(formattedTime)
+        if (calculateTotal() && SelectProducts) {
+
+            fetch(`http://localhost:8200/api/posts`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "totalAmount": calculateTotal(),
+                    "Items": SelectProducts,
+                    "date": formattedTime.toString(),
+                })
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    setSelectProducts([])
+                    setChangeValue(0)
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    };
 
     const addBIll = (e) => {
         e.preventDefault()
@@ -196,10 +234,10 @@ export default function LoginPage() {
         }
     };
 
-const resetAll = ()=> {
-setSelectProducts([])
-setChangeValue(0)
-}
+    const resetAll = () => {
+        setSelectProducts([])
+        setChangeValue(0)
+    }
 
     return (
         <>
@@ -224,8 +262,8 @@ setChangeValue(0)
                             <Grid item xs={4}>
                                 <Item>
                                     <div style={{ height: '300px', overflowY: 'auto' }}>
-                                    <a href='#' onClick={resetAll}>Reset All</a>
-                                        
+                                        <a href='#' onClick={resetAll}>Reset All</a>
+
                                         <table className="table table-sm table-dark">
                                             <thead>
                                                 <tr>
@@ -248,7 +286,7 @@ setChangeValue(0)
 
                                                                 {/* <input type='text' name="price" style={{ width: '80px', textAlign: 'center' }} defaultValue={calculateTotalPrice(item, index, 'price')} maxLength={3} max={3} /> */}
                                                             </td>
-                                                            <td style={{cursor:'pointer'}} ><Button style={{color:'white'}} onClick={()=>removeItemByIndex(index)}>X</Button></td>
+                                                            <td style={{ cursor: 'pointer' }} ><Button style={{ color: 'white' }} onClick={() => removeItemByIndex(index)}>X</Button></td>
 
                                                         </tr>
                                                     )
@@ -324,7 +362,7 @@ setChangeValue(0)
                                                 <div style={{ display: 'none' }}>
                                                     <ComponentToPrint calculateTotal={calculateTotal()} SelectProducts={SelectProducts} ref={componentRef} />
                                                 </div>
-                                                <button onClick={handle}>Print Bill</button>
+                                                <button onClick={(e) => addBIllwithoutPrint(e)} className='btn btn-primary mb-2' >WithOut Print</button>
                                                 {/* <div className='lableTotal'> Return</div> */}
                                                 <button className='print' type='button' onClick={(e) => addBIll(e)}>
                                                     Print

@@ -5,12 +5,13 @@ import moment from 'moment';
 import logo from '../logo.png'
 
 const now = moment();
+// const newDateTime = now.add(2, 'days');
 const formattedDateTime = now.format('DD-MM-YYYY h:mm A');
 const ComponentToPrint = React.forwardRef((props, ref) => {
     return (
         <>
             <div ref={ref} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: '12px' }}>
-              <h2 style={{fontWeight:'700'}}>Docter Hotel</h2>
+                <h2 style={{ fontWeight: '700' }}>Docter Hotel</h2>
                 {/* <img className='mainHeading' alt='logo' width={100} height={100} src={logo} /> */}
                 ---------------------- ----------------------
                 <span>{formattedDateTime}</span>
@@ -18,7 +19,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                 <table>
                     <thead>
                         <tr>
-                            <th style={{fontWeight:'600'}}>Title</th>
+                            <th style={{ fontWeight: '600' }}>Title</th>
                             <th>Quantity</th>
                             <th>Price</th>
                         </tr>

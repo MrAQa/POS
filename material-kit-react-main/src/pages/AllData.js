@@ -12,7 +12,6 @@ const AllData = [
     { title: 'Chicken Qorma (Half)', price: '200', type: 'Food', quantity: 1 },
     { title: 'Chicken Qorma (Small)', price: '150', type: 'Food', quantity: 1 },
 
-
     { title: 'Sabzi (Full)', price: '240', type: 'Food', quantity: 1 },
     { title: 'Sabzi (Half)', price: '120', type: 'Food', quantity: 1 },
     { title: 'Sabzi (Small)', price: '80', type: 'Food', quantity: 1 },
@@ -29,10 +28,15 @@ const AllData = [
     { title: 'Alo Qeema (Half)', price: '250', type: 'Food', quantity: 1 },
     { title: 'Alo Qeema (Small)', price: '200', type: 'Food', quantity: 1 },
 
+    { title: 'Chany (Full)', price: '240', type: 'Food', quantity: 1 },
+    { title: 'Chany (Half)', price: '120', type: 'Food', quantity: 1 },
+    { title: 'Chany (Small)', price: '80', type: 'Food', quantity: 1 },
+
 
     { title: 'Raita', price: '30', type: 'Others', quantity: 1 },
     { title: 'Salad ', price: '50', type: 'Others', quantity: 1 },
     { title: 'Roti', price: '20', type: 'Others', quantity: 1 },
+
     { title: 'Naan', price: '25', type: 'Others', quantity: 1 },
     { title: 'Roghni Naan', price: '40', type: 'Others', quantity: 1 },
     { title: 'Kulcha', price: '30', type: 'Others', quantity: 1 },

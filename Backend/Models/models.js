@@ -26,6 +26,7 @@ const postSchema = new mongoose.Schema({
     ],
     totalAmount: { type: Number, required: true },
     date: { type: String },
+    createdAt: { type: Date }
 });
 
 const Post = mongoose.model('Post', postSchema);

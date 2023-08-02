@@ -20,7 +20,7 @@ require('./db');
 app.post('/api/posts', (req, res) => {
     const { date, totalAmount, Items } = req.body; // Extract date, totalAmount, and Items from req.body
 
-    const newPost = new Post({ date, totalAmount, Items });
+    const newPost = new Post({ createdAt: new Date(), date, totalAmount, Items });
     // Save the new post to the database
     newPost.save()
         .then(savedPost => {
