@@ -4,7 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography } from '@mui/material';
+import { Grid, Container, Typography, Button } from '@mui/material';
+
 // components
 import Iconify from '../components/iconify';
 // sections
@@ -24,25 +25,52 @@ import {
 
 export default function DashboardAppPage() {
   const [TotaSum, setTotaSum] = useState()
+  const [currentDate, setCurrentDate] = useState(new Date());
+
   const theme = useTheme();
+  const dateOnly = currentDate.toISOString().split('T')[0];
+  // const datetime = currentDate.toISOString().split('T')[1];
+
   useEffect(() => {
     addBIll()
-  }, [])
-  const addBIll = (e) => {
-    const currentDate = new Date();
+  }, [dateOnly])
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000);
 
-    const options = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      // hour: '2-digit',
-      // minute: '2-digit',
-      // second: '2-digit',
-      timeZone: 'Asia/Karachi', // PKT time zone
+    return () => {
+      clearInterval(interval);
     };
-    const formattedTime = new Intl.DateTimeFormat('en-US', options).format(currentDate);
+  }, []);
+  const formatDate = (date, timeZone) => {
+    const options = { hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone };
+    return date.toLocaleTimeString(undefined, options);
+  };
 
-    fetch(`http://localhost:8200/api/allposts?date=${formattedTime}`, {
+
+  const timeOnly = formatDate(currentDate, 'America/New_York');
+
+
+  const handlePrevDayClick = () => {
+    const newDate = new Date(currentDate);
+    newDate.setDate(currentDate.getDate() - 1);
+    setCurrentDate(newDate);
+  };
+
+  const handleNextDayClick = () => {
+    const newDate = new Date(currentDate);
+    newDate.setDate(currentDate.getDate() + 1);
+    setCurrentDate(newDate);
+  };
+
+
+  const addBIll = (e) => {
+
+
+    // Get the date portion
+
+    fetch(`http://localhost:8200/api/allposts?createdAt=${dateOnly}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -59,36 +87,6 @@ export default function DashboardAppPage() {
       });
   };
 
-  // const getBIll = (e) => {
-  //   const currentDate = new Date();
-
-  //   const options = {
-  //     year: 'numeric',
-  //     month: '2-digit',
-  //     day: '2-digit',
-  //     // hour: '2-digit',
-  //     // minute: '2-digit',
-  //     // second: '2-digit',
-  //     timeZone: 'Asia/Karachi', // PKT time zone
-  //   };
-  //   const formattedTime = new Intl.DateTimeFormat('en-US', options).format(currentDate);
-
-  //   fetch(`http://localhost:8200/api/allposts?date=${formattedTime}`, {
-  //     method: "GET",
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log(data)
-  //       setTotaSum(data.totalPriceByType)
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
 
   return (
     <>
@@ -100,10 +98,21 @@ export default function DashboardAppPage() {
         <Typography variant="h4" sx={{ mb: 5 }}>
           Hi, Welcome back
         </Typography>
+        <Grid item alignItems={'end'} display={'flex'} spacing={2} className='preious-Date'>
 
+          <Button variant="contained" color="primary" onClick={handlePrevDayClick}>
+            Previous
+          </Button>
+          <Button variant="contained" color="secondary" onClick={handleNextDayClick}>
+            Next
+          </Button>
+        </Grid>
+        <Grid item alignItems={'end'} display={'flex'} spacing={2} className='preious-Date'>
+          <b>Date = <span>{dateOnly} </span></b>
+        </Grid>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Daily Sales" total={Number(TotaSum?.Juice ? TotaSum?.Juice : 0 ) + Number(TotaSum?.Chai ? TotaSum?.Chai : 0 ) + Number(TotaSum?.Food ? TotaSum?.Food : 0 ) + Number(TotaSum?.Others ? TotaSum?.Others : 0 )} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="Daily Sales" total={Number(TotaSum?.Juice ? TotaSum?.Juice : 0) + Number(TotaSum?.Chai ? TotaSum?.Chai : 0) + Number(TotaSum?.Food ? TotaSum?.Food : 0) + Number(TotaSum?.Others ? TotaSum?.Others : 0)} icon={'ant-design:android-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>

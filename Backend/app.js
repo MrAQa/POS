@@ -55,7 +55,7 @@ app.get('/api/posts', async (req, res) => {
 
 app.get('/api/allposts', async (req, res) => {
     try {
-        const { type, date } = req.query;
+        const { type, date, createdAt } = req.query;
         let posts;
         const filter = {};
         // If the 'type' query parameter is present, filter by type
@@ -67,6 +67,17 @@ app.get('/api/allposts', async (req, res) => {
         if (date) {
             filter.date = date;
         }
+        if (createdAt) {
+            // Convert the createdAt date string to a Date object
+            const createdAtDate = new Date(createdAt);
+            // Query posts created on the specific createdAt date
+            filter.createdAt = {
+                $gte: createdAtDate,
+                $lt: new Date(createdAtDate.getTime() + 24 * 60 * 60 * 1000) // Next day
+            };
+        }
+
+
         posts = await Post.find(filter);
         // Filter Food items from all posts
         const foodItems = posts.flatMap(post => post.Items.filter(item => item.type === 'Food' || item.type === 'Juice' || item.type === 'Others' || item.type === 'Chai'));
