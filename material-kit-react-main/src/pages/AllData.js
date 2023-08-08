@@ -30,7 +30,10 @@ const AllData = [
 
     { title: 'Chany (Full)', price: '240', type: 'Food', quantity: 1 },
     { title: 'Chany (Half)', price: '120', type: 'Food', quantity: 1 },
-    { title: 'Chany (Small)', price: '80', type: 'Food', quantity: 1 },
+    { title: 'Chany (Small)', price: '60', type: 'Food', quantity: 1 },
+
+    { title: 'Fry', price: '50', type: 'Food', quantity: 1 },
+    { title: 'Boiled Egg', price: '40', type: 'Food', quantity: 1 },
 
 
     { title: 'Raita', price: '30', type: 'Others', quantity: 1 },
@@ -45,6 +48,9 @@ const AllData = [
     { title: 'Anda Paratha', price: '120', type: 'Others', quantity: 1 },
     { title: 'Sada Aamlait', price: '50', type: 'Others', quantity: 1 },
     { title: 'Special Aamlait', price: '80', type: 'Others', quantity: 1 },
+    { title: 'pakroyen (Small)', price: '50', type: 'Others', quantity: 1 },
+    { title: 'pakroyen (Half)', price: '100', type: 'Others', quantity: 1 },
+    { title: 'pakroyen (Full)', price: '200', type: 'Others', quantity: 1 },
 
     { title: 'Chai', price: '50', type: 'Chai', quantity: 1 },
     { title: 'Chai (parsal)', price: '60', type: 'Chai', quantity: 1 },

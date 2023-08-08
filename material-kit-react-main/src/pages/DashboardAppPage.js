@@ -5,7 +5,6 @@ import { faker } from '@faker-js/faker';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography, Button } from '@mui/material';
-
 // components
 import Iconify from '../components/iconify';
 // sections
@@ -29,27 +28,11 @@ export default function DashboardAppPage() {
 
   const theme = useTheme();
   const dateOnly = currentDate.toISOString().split('T')[0];
-  // const datetime = currentDate.toISOString().split('T')[1];
+  const datetime = currentDate.toISOString().split('T')[1];
 
   useEffect(() => {
     addBIll()
   }, [dateOnly])
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentDate(new Date());
-    }, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-  const formatDate = (date, timeZone) => {
-    const options = { hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone };
-    return date.toLocaleTimeString(undefined, options);
-  };
-
-
-  const timeOnly = formatDate(currentDate, 'America/New_York');
 
 
   const handlePrevDayClick = () => {
@@ -108,7 +91,7 @@ export default function DashboardAppPage() {
           </Button>
         </Grid>
         <Grid item alignItems={'end'} display={'flex'} spacing={2} className='preious-Date'>
-          <b>Date = <span>{dateOnly} </span></b>
+          <b>Date = <span>{dateOnly}</span></b>
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
