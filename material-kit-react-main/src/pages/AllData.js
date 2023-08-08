@@ -54,6 +54,7 @@ const AllData = [
 
     { title: 'Chai', price: '50', type: 'Chai', quantity: 1 },
     { title: 'Chai (parsal)', price: '60', type: 'Chai', quantity: 1 },
+    { title: 'Chai (Goor)', price: '60', type: 'Chai', quantity: 1 },
     { title: 'Karak Chai', price: '60', type: 'Chai', quantity: 1 },
     { title: 'Mali Chai', price: '60', type: 'Chai', quantity: 1 },
     { title: 'Doodh patti', price: '70', type: 'Chai', quantity: 1 },
@@ -81,6 +82,7 @@ const AllData = [
 
     { title: 'Khajoor Shake (FUll)', price: '200', type: 'Juice', quantity: 1 },
     { title: 'Khajoor Shake (HALF)', price: '150', type: 'Juice', quantity: 1 },
+    // { title: 'Parsl', price: '150', type: 'Juice', quantity: 1 },
 
 ]
 export default AllData
