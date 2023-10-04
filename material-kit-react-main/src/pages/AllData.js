@@ -34,7 +34,7 @@ const AllData = [
 
     { title: 'Fry', price: '50', type: 'Food', quantity: 1 },
     { title: 'Boiled Egg', price: '40', type: 'Food', quantity: 1 },
-
+    { title: 'Shami', price: '80', type: 'Food', quantity: 1 },
 
     { title: 'Raita', price: '30', type: 'Others', quantity: 1 },
     { title: 'Salad ', price: '50', type: 'Others', quantity: 1 },
