@@ -53,7 +53,7 @@ export default function DashboardAppPage() {
 
     // Get the date portion
 
-    fetch(`http://localhost:8200/api/allposts?createdAt=${dateOnly}`, {
+    fetch(`http://51.20.84.249/api/allposts?createdAt=${dateOnly}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',

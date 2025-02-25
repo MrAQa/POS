@@ -11,7 +11,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
     return (
         <>
             <div ref={ref} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: '12px' }}>
-                <h2 style={{ fontWeight: '700' }}>Docter Hotel</h2>
+                <h2 style={{ fontWeight: '700' }}>The Hunger Bites</h2>
                 {/* <img className='mainHeading' alt='logo' width={100} height={100} src={logo} /> */}
                 ---------------------- ----------------------
                 <span>{formattedDateTime}</span>
