@@ -161,22 +161,44 @@ app.get('/api/todaydata', async (req, res) => {
 
 app.get('/api/sales', async (req, res) => {
     try {
-        // Fetch all posts
-        const posts = await Post.find({});
+        const now = new Date();
+        const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const startOfLastWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+        const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+        const startOfLastYear = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
 
-        // Aggregate total sales by item type
-        const totalPriceByType = posts.reduce((acc, post) => {
-            post.Items.forEach(item => {
-                if (item.type === 'Pizza' || item.type === 'Deals' || item.type === 'Pasta' || item.type === 'Fries') {
-                    if (!acc[item.type]) acc[item.type] = 0;
-                    acc[item.type] += item.price * item.quantity;
+        // Function to calculate sales within a given time period
+        const calculateSales = async (startDate, endDate) => {
+            const filter = {
+                createdAt: {
+                    $gte: startDate,
+                    $lt: endDate ? endDate : new Date(startDate.getTime() + 24 * 60 * 60 * 1000)
                 }
-            });
-            return acc;
-        }, {});
+            };
+            const posts = await Post.find(filter);
+            return posts.reduce((acc, post) => {
+                post.Items.forEach(item => {
+                    if (['Pizza', 'Deals', 'Pasta', 'Fries'].includes(item.type)) {
+                        acc += item.price * item.quantity;
+                    }
+                });
+                return acc;
+            }, 0);
+        };
+
+        // Aggregate sales data for different periods
+        const dailySales = await calculateSales(startOfDay);
+        const lastWeekSales = await calculateSales(startOfLastWeek, new Date(startOfLastWeek.getTime() + 7 * 24 * 60 * 60 * 1000));
+        const lastMonthSales = await calculateSales(startOfLastMonth, new Date(startOfLastMonth.getFullYear(), startOfLastMonth.getMonth() + 1, startOfLastMonth.getDate()));
+        const lastYearSales = await calculateSales(startOfLastYear, new Date(startOfLastYear.getFullYear() + 1, startOfLastYear.getMonth(), startOfLastYear.getDate()));
 
         // Respond with the aggregated sales data
-        res.json(totalPriceByType);
+        res.json({
+            daily: dailySales,
+            last_week: lastWeekSales,
+            last_month: lastMonthSales,
+            last_year: lastYearSales
+        });
     } catch (error) {
         console.error('Error fetching sales data:', error);
         res.status(500).json({ error: 'Internal server error' });
