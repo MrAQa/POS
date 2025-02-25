@@ -80,7 +80,7 @@ app.get('/api/allposts', async (req, res) => {
 
         posts = await Post.find(filter);
         // Filter Food items from all posts
-        const foodItems = posts.flatMap(post => post.Items.filter(item => item.type === 'Food' || item.type === 'Juice' || item.type === 'Others' || item.type === 'Chai'));
+        const foodItems = posts.flatMap(post => post.Items.filter(item => item.type === 'Pizza' || item.type === 'Deals' || item.type === 'Pasta' || item.type === 'Fries'));
 
         // Calculate the sum of prices for each item type
         const totalPriceByType = foodItems.reduce((acc, item) => {
