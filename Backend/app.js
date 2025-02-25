@@ -159,52 +159,24 @@ app.get('/api/todaydata', async (req, res) => {
 });
 
 
-router.get('/api/sales', async (req, res) => {
+app.get('/api/sales', async (req, res) => {
     try {
-        const { period } = req.query; // 'day', 'week', 'month', 'year'
-        const now = new Date();
-        let startDate, endDate;
+        // Fetch all posts
+        const posts = await Post.find({});
 
-        switch (period) {
-            case 'day':
-                startDate = new Date(now.setHours(0, 0, 0, 0));
-                endDate = new Date(now.setHours(23, 59, 59, 999));
-                break;
-            case 'week':
-                const dayOfWeek = now.getDay();
-                startDate = new Date(now.setDate(now.getDate() - dayOfWeek));
-                startDate.setHours(0, 0, 0, 0);
-                endDate = new Date(startDate.getTime() + (7 * 24 * 60 * 60 * 1000) - 1);
-                break;
-            case 'month':
-                startDate = new Date(now.getFullYear(), now.getMonth(), 1);
-                endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
-                break;
-            case 'year':
-                startDate = new Date(now.getFullYear(), 0, 1);
-                endDate = new Date(now.getFullYear(), 11, 31, 23, 59, 59, 999);
-                break;
-            default:
-                return res.status(400).json({ error: 'Invalid period specified' });
-        }
-
-        const filter = {
-            createdAt: { $gte: startDate, $lt: endDate }
-        };
-
-        const posts = await Post.find(filter);
-
-        // Example aggregation of total sales
-        const totalSales = posts.reduce((acc, post) => {
+        // Aggregate total sales by item type
+        const totalPriceByType = posts.reduce((acc, post) => {
             post.Items.forEach(item => {
                 if (item.type === 'Pizza' || item.type === 'Deals' || item.type === 'Pasta' || item.type === 'Fries') {
-                    acc += item.price * item.quantity;
+                    if (!acc[item.type]) acc[item.type] = 0;
+                    acc[item.type] += item.price * item.quantity;
                 }
             });
             return acc;
-        }, 0);
+        }, {});
 
-        res.json({ totalSales });
+        // Respond with the aggregated sales data
+        res.json(totalPriceByType);
     } catch (error) {
         console.error('Error fetching sales data:', error);
         res.status(500).json({ error: 'Internal server error' });
