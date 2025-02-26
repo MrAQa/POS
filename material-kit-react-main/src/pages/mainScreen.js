@@ -282,7 +282,7 @@ export default function LoginPage() {
     <Grid container spacing={2} sx={{ minHeight: '100vh' }}>
       {/* Categories Column */}
       <Grid item xs={12} md={3}>
-        <Paper sx={{ p: 2, height: '50vh', overflowY: 'auto' }}>
+        <Paper sx={{ p: 2, height: '50vh', overflowY: 'auto', padding:'10px'}}>
           <Stack spacing={1}>
             {name.map((item) => (
               <Button
@@ -306,7 +306,7 @@ export default function LoginPage() {
         <Paper sx={{ height: '50vh', overflowY: 'auto', p: 2 }}>
           <Grid container spacing={1}>
             {AllData?.filter(item => item.type === SelectedTitle).map((item) => (
-              <Grid item xs={6} sm={4} key={item.id}>
+              <Grid item xs={6} sm={6} key={item.id}>
                 <Button
                   variant="outlined"
                   onClick={() => addItem(item)}
@@ -315,7 +315,8 @@ export default function LoginPage() {
                     py: 2,
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
-                    textOverflow: 'ellipsis'
+                    textOverflow: 'ellipsis',
+                    width:'auto'
                   }}
                 >
                   {item.title}
@@ -439,6 +440,13 @@ export default function LoginPage() {
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <Stack spacing={1}>
+              <div style={{ display: 'none' }}>
+                          <ComponentToPrint
+                            calculateTotal={calculateTotal()}
+                            SelectProducts={SelectProducts}
+                            ref={componentRef}
+                          />
+                        </div>
                 <Button
                   variant="contained"
                   color="primary"

@@ -23,7 +23,9 @@ import {
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
-  const [TotaSum, setTotaSum] = useState()
+  const [TotaSum, setTotaSum] = useState() ;
+   const [TotalSales, setTotalSales] = useState()
+
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const theme = useTheme();
@@ -32,6 +34,7 @@ export default function DashboardAppPage() {
 
   useEffect(() => {
     addBIll()
+    getSale()
   }, [dateOnly])
 
 
@@ -69,7 +72,28 @@ export default function DashboardAppPage() {
         console.error(error);
       });
   };
+  const getSale = (e) => {
 
+
+    // Get the date portion
+
+    fetch(`http://51.20.84.249/api/sales`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+
+        setTotalSales(data)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <>
@@ -95,27 +119,27 @@ export default function DashboardAppPage() {
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Daily Sales" total={Number(TotaSum?.Juice ? TotaSum?.Juice : 0) + Number(TotaSum?.Chai ? TotaSum?.Chai : 0) + Number(TotaSum?.Food ? TotaSum?.Food : 0) + Number(TotaSum?.Others ? TotaSum?.Others : 0)} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="Daily Sales" total={Number(TotalSales?.daily)} icon={'ant-design:android-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Last Weak Sales" total={10} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Last Weak Sales" total={Number(TotalSales?.last_week)} color="info" icon={'ant-design:apple-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Last Month Sales" total={10} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title="Last Month Sales" total={Number(TotalSales?.last_month)} color="warning" icon={'ant-design:windows-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Last Year Sales" total={10} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="Last Year Sales" total={Number(TotalSales?.last_year)} color="error" icon={'ant-design:bug-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Daily Juice Sales" total={TotaSum?.Juice} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Daily Juice Sales" total={TotaSum?.Pizza} color="info" icon={'ant-design:apple-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Daily Teas Sales" total={TotaSum?.Chai} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title="Daily Teas Sales" total={TotaSum?.Fries} color="warning" icon={'ant-design:windows-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
