@@ -80,7 +80,7 @@ app.get('/api/allposts', async (req, res) => {
 
         posts = await Post.find(filter);
         // Filter Food items from all posts
-        const foodItems = posts.flatMap(post => post.Items.filter(item => item.type === 'Pizza  ' || item.type === 'Deals' || item.type === 'Pasta' || item.type === 'Fries'));
+        const foodItems = posts.flatMap(post => post.Items.filter(item => item.type === 'Pizza' || item.type === 'Deals' || item.type === 'Pasta' || item.type === 'Fries'));
 
         // Calculate the sum of prices for each item type
         const totalPriceByType = foodItems.reduce((acc, item) => {
@@ -139,7 +139,7 @@ app.get('/api/todaydata', async (req, res) => {
         posts = await Post.find(filter);
 
         // Filter Food items from all posts
-        const foodItems = posts.flatMap(post => post.Items.filter(item => item.type === 'Food' || item.type === 'Juice' || item.type === 'Others' || item.type === 'Chai'));
+        const foodItems = posts.flatMap(post => post.Items.filter(item => item.type === 'Food' || item.type === 'Juice' || item.type === 'Others' || item.type === 'Fries' || item.type === 'Fries'|| item.type === 'Fries'|| item.type === 'Fries'));
 
         // Calculate the sum of prices for each item type
         const totalPriceByType = foodItems.reduce((acc, item) => {
@@ -178,7 +178,7 @@ app.get('/api/sales', async (req, res) => {
             const posts = await Post.find(filter);
             return posts.reduce((acc, post) => {
                 post.Items.forEach(item => {
-                    if (['Pizza', 'Deals', 'Pasta', 'Fries'].includes(item.type)) {
+                    if (['Pizza', 'Deals', 'Pasta', 'Fries','Drinks','Shakes','Dips','Desserts'].includes(item.type)) {
                         acc += item.price * item.quantity;
                     }
                 });
