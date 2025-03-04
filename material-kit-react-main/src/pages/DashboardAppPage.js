@@ -107,12 +107,12 @@ export default function DashboardAppPage() {
         </Typography>
         <Grid item alignItems={'end'} display={'flex'} spacing={2} className='preious-Date'>
 
-          <Button variant="contained" color="primary" onClick={handlePrevDayClick}>
+          {/* <Button variant="contained" color="primary" onClick={handlePrevDayClick}>
             Previous
           </Button>
           <Button variant="contained" color="secondary" onClick={handleNextDayClick}>
             Next
-          </Button>
+          </Button> */}
         </Grid>
         <Grid item alignItems={'end'} display={'flex'} spacing={2} className='preious-Date'>
           <b>Date = <span>{dateOnly}</span></b>
@@ -134,7 +134,7 @@ export default function DashboardAppPage() {
             <AppWidgetSummary title="Last Year Sales" total={Number(TotalSales?.last_year)} color="error" icon={'ant-design:bug-filled'} />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
+          {/* <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary title="Daily Juice Sales" total={TotaSum?.Pizza} color="info" icon={'ant-design:apple-filled'} />
           </Grid>
 
@@ -147,7 +147,7 @@ export default function DashboardAppPage() {
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary title="Others" total={TotaSum?.Others} color="error" icon={'ant-design:bug-filled'} />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
               title="Website Visits"
@@ -206,7 +206,7 @@ export default function DashboardAppPage() {
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AppConversionRates
               title="Conversion Rates"
               subheader="(+43%) than last year"
@@ -308,7 +308,7 @@ export default function DashboardAppPage() {
                 { id: '5', label: 'Sprint Showcase' },
               ]}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </>

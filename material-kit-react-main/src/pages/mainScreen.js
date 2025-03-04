@@ -1,477 +1,400 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
+import React, { useState, useRef } from 'react';
 import { styled } from '@mui/material/styles';
-// import { } from '@mui/material';
-import TextField from '@mui/material/TextField';
+import moment from 'moment';
+import { Link, Container, Typography, Divider, Stack, Button } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useReactToPrint } from 'react-to-print';
 import NavigationIcon from '@mui/icons-material/Navigation';
-import {
-  Paper,
-  Typography,
-  Table,
-  Container, Stack, Button,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  IconButton
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import PrintIcon from '@mui/icons-material/Print';
-import './app.css';
+import KebabDiningIcon from '@mui/icons-material/KebabDining';
+import Paper from '@mui/material/Paper';
+import axios from 'axios';
+
+import './app.css'
+import TextField from '@mui/material/TextField';
 
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
-import AllData from './AllData';
+import AllData from './AllData'
 
 import useResponsive from '../hooks/useResponsive';
 
+
+import Logo from '../components/logo';
+import Iconify from '../components/iconify';
+import { LoginForm } from '../sections/auth/login';
 import ComponentToPrint from './ComponentToPrint';
 
+
 const StyledRoot = styled('div')(({ theme }) => ({
-  [theme.breakpoints.up('md')]: {
-    display: 'flex',
-  },
+    [theme.breakpoints.up('md')]: {
+        display: 'flex',
+    },
 }));
-// const Item = styled(Paper)(({ theme }) => ({
-//   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-//   ...theme.typography.body2,
-//   padding: theme.spacing(1),
-//   textAlign: 'center',
-//   color: theme.palette.text.secondary,
-// }));
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
 
-// const StyledSection = styled('div')(({ theme }) => ({
-//   width: '100%',
-//   maxWidth: 480,
-//   display: 'flex',
-//   flexDirection: 'column',
-//   justifyContent: 'center',
-//   boxShadow: theme.customShadows.card,
-//   backgroundColor: theme.palette.background.default,
-// }));
+const StyledSection = styled('div')(({ theme }) => ({
+    width: '100%',
+    maxWidth: 480,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    boxShadow: theme.customShadows.card,
+    backgroundColor: theme.palette.background.default,
+}));
 
-// const StyledContent = styled('div')(({ theme }) => ({
-//   maxWidth: 480,
-//   margin: 'auto',
-//   minHeight: '100vh',
-//   display: 'flex',
-//   justifyContent: 'center',
-//   flexDirection: 'column',
-//   padding: theme.spacing(12, 0),
-// }));
+const StyledContent = styled('div')(({ theme }) => ({
+    maxWidth: 480,
+    margin: 'auto',
+    minHeight: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    padding: theme.spacing(12, 0),
+}));
+
 
 export default function LoginPage() {
-  const mdUp = useResponsive('up', 'md');
-  const [SelectedTitle, setSelectedTitle] = useState('Food');
-  const [ChangeValue, setChangeValue] = useState(0);
-  const [SelectProducts, setSelectProducts] = useState([]);
-  const [name, setName] = React.useState([
-    {
-      title: 'Pizza',
-    },
-    {
-      title: "Pasta",
-    },
-    {
-      title: "Drinks",
-    },
-    {
-      title: "Fries",
-    },
-    {
-      title: "Shakes",
-    },
-    {
-      title: 'Deals',
-    },
-    {
-      title: 'Desserts',
-    },
-    {
-      title: 'Dips',
-    },
-  
-  ]);
-
-  useEffect(() => {
-    setSelectProducts(SelectProducts);
-  }, [SelectProducts]);
-
-  const addItem = (Item) => {
-    // Check if the item already exists in the array
-    const existingItemIndex = SelectProducts.findIndex(product => product.title === Item.title);
-    
-    // If the item exists, increment its quantity
-    if (existingItemIndex !== -1) {
-        const updatedProducts = [...SelectProducts];
-        updatedProducts[existingItemIndex] = {
-            ...updatedProducts[existingItemIndex],
-            quantity: updatedProducts[existingItemIndex].quantity + 1
-        };
-        setSelectProducts(updatedProducts);
-        console.log(updatedProducts);
-    } else {
-        // If the item does not exist, add it to the array
-        const newArray = [...SelectProducts, Item];
-        setSelectProducts(newArray);
-        console.log(newArray);
-    }
-};
-
-
-  const addCustom = (Item) => {
-    const newArray = [
-      ...SelectProducts,
+    const mdUp = useResponsive('up', 'md');
+    const [SelectedTitle, setSelectedTitle] = useState('Food')
+    const [ChangeValue, setChangeValue] = useState(0)
+    const [SelectProducts, setSelectProducts] = useState([])
+    const [name, setName] = React.useState([
       {
-        title: '',
-        price: '0',
-        type: 'Pizza',
-        quantity: 1,
+        title: 'Pizza',
       },
-    ];
-    console.log(newArray);
-    setSelectProducts(newArray);
-  };
-  const removeItemByIndex = (index) => {
-    const newArray = [...SelectProducts];
+      {
+        title: "Pasta",
+      },
+      {
+        title: "Drinks",
+      },
+      {
+        title: "Fries",
+      },
+      {
+        title: "Shakes",
+      },
+      {
+        title: 'Deals',
+      },
+      {
+        title: 'Desserts',
+      },
+      {
+        title: 'Dips',
+      },
+    
+    ]);
 
-    if (index >= 0 && index < newArray.length) {
-      newArray.splice(index, 1);
+    const addItem = (Item) => {
+        // Check if the item already exists in the array
 
-      setSelectProducts(newArray);
-    } else {
-      console.error('Invalid index.');
+        // If the item doesn't exist, add it to the array with quantity 1
+        const newArray = [...SelectProducts, Item];
+        console.log(newArray);
+        setSelectProducts(newArray);
     }
-  };
 
-  const calculateTotal = () => {
-    if (!SelectProducts || SelectProducts.length === 0) {
-      return 0;
-    }
 
-    const totalPrice = SelectProducts.reduce((accumulator, product) => {
-      return accumulator + Number(product.price) * Number(product.quantity);
-    }, 0);
+    const removeItemByIndex = (index) => {
+        // Make a copy of the original array using spread operator
+        const newArray = [...SelectProducts];
 
-    return totalPrice.toFixed(2);
-  };
+        // Check if the index is within the array bounds
+        if (index >= 0 && index < newArray.length) {
+            // Use splice() method to remove the item at the specified index
+            newArray.splice(index, 1);
 
-  const calculateTotalPrice = (product, index, name) => {
-    const newPrice = Number(product.quantity) * Number(product.price);
-    return newPrice.toString();
-  };
-
-  const defaultValue = (e, index) => {
-    const obj = [...SelectProducts]; // Use spread operator to create a shallow copy of SelectProducts
-    obj[index].price = e.target.value;
-    console.log(obj);
-    setSelectProducts(obj);
-  };
-
-  const quantityChange = (e, index) => {
-    console.log(e.target.value);
-    if (e.target.value) {
-      const newQuantity = parseInt(e.target.value, 10);
-
-      const updatedProducts = [...SelectProducts];
-      updatedProducts[index].quantity = newQuantity;
-      setSelectProducts(updatedProducts);
-      console.log(updatedProducts)
-    } else {
-      const newQuantity = 0;
-
-      const updatedProducts = [...SelectProducts];
-      updatedProducts[index].quantity = newQuantity;
-      setSelectProducts(updatedProducts);
-    }
-  };
-
-  const priceCHange = (e, index) => {
-    setChangeValue(e.target.value);
-  };
-
-  const componentRef = useRef();
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
-
-  const handle = (e) => {
-    handlePrint();
-  };
-
-  const addBIllwithoutPrint = (e) => {
-    e.preventDefault();
-    const currentDate = new Date();
-    const options = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      timeZone: 'Asia/Karachi',
+            // Update the state with the modified array
+            setSelectProducts(newArray);
+        } else {
+            console.error("Invalid index.");
+        }
     };
-    const formattedTime = new Intl.DateTimeFormat('en-US', options).format(currentDate);
-    console.log(formattedTime);
-    if (calculateTotal() && SelectProducts) {
-      fetch(`http://51.20.84.249/api/posts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          totalAmount: calculateTotal(),
-          Items: SelectProducts,
-          date: formattedTime.toString(),
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setSelectProducts([]);
-          setChangeValue(0);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  };
 
-  const addBIll = (e) => {
-    e.preventDefault();
-    const currentDate = new Date();
-    const options = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      timeZone: 'Asia/Karachi',
+    const calculateTotal = () => {
+        if (!SelectProducts || SelectProducts.length === 0) {
+            return 0; // Return 0 if SelectProducts is empty or not defined
+        }
+
+        const totalPrice = SelectProducts.reduce((accumulator, product) => {
+            return accumulator + Number(product.price) * Number(product.quantity);
+        }, 0);
+
+        return totalPrice.toFixed(2); // Return the total price with two decimal places
     };
-    const formattedTime = new Intl.DateTimeFormat('en-US', options).format(currentDate);
-    console.log(formattedTime);
-    if (calculateTotal() && SelectProducts) {
-      handle();
 
-      fetch(`http://51.20.84.249/api/posts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          totalAmount: calculateTotal(),
-          Items: SelectProducts,
-          date: formattedTime.toString(),
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setSelectProducts([]);
-          setChangeValue(0);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    const calculateTotalPrice = (product, index, name) => {
+
+        const newPrice = Number(product.quantity) * Number(product.price);
+        return newPrice.toString();
     }
-  };
 
-  const resetAll = () => {
-    setSelectProducts([]);
-    setChangeValue(0);
-  };
+    const quantityChange = (e, index) => {
+        console.log(e.target.value)
+        if (e.target.value) {
 
-  return (
-    <>
-    <StyledRoot>
-  <Container maxWidth="lg" sx={{ py: 2 }}>
-    <Grid container spacing={2} sx={{ minHeight: '100vh' }}>
-      {/* Categories Column */}
-      <Grid item xs={12} md={3}>
-        <Paper sx={{ p: 2, height: '50vh', overflowY: 'auto', padding:'10px'}}>
-          <Stack spacing={1}>
-            {name.map((item) => (
-              <Button
-                key={item.title}
-                variant="contained"
-                color={SelectedTitle === item.title ? 'primary' : 'secondary'}
-                onClick={() => setSelectedTitle(item.title)}
-                fullWidth
-                startIcon={<NavigationIcon />}
-                sx={{ py: 1.5, textTransform: 'none' }}
-              >
-                {item.title}
-              </Button>
-            ))}
-          </Stack>
-        </Paper>
-      </Grid>
+            const newQuantity = parseInt(e.target.value, 10);
 
-      {/* Products Column */}
-      <Grid item xs={12} md={5}>
-        <Paper sx={{ height: '50vh', overflowY: 'auto', p: 2 }}>
-          <Grid container spacing={1}>
-            {AllData?.filter(item => item.type === SelectedTitle).map((item) => (
-              <Grid item xs={6} sm={6} key={item.id}>
-                <Button
-                  variant="outlined"
-                  onClick={() => addItem(item)}
-                  fullWidth
-                  sx={{ 
-                    py: 2,
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    width:'auto'
-                  }}
-                >
-                  {item.title}
-                </Button>
-              </Grid>
-            ))}
-          </Grid>
-        </Paper>
-      </Grid>
+            const updatedProducts = [...SelectProducts];
+            updatedProducts[index].quantity = newQuantity;
+            setSelectProducts(updatedProducts);
+        }
+        else {
+            const newQuantity = 0
 
-      {/* Cart Column */}
-      <Grid item xs={12} md={4}>
-        <Paper sx={{ p: 2, height: '50vh', display: 'flex', flexDirection: 'column' }}>
-          <Box sx={{ 
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            mb: 2
-          }}>
-            <Typography variant="h6">Cart</Typography>
-            <Button onClick={resetAll} color="error" size="small">
-              Reset All
-            </Button>
-          </Box>
+            const updatedProducts = [...SelectProducts];
+            updatedProducts[index].quantity = newQuantity;
+            setSelectProducts(updatedProducts);
+        }
 
-          <Box sx={{ flexGrow: 1, overflowY: 'auto', mb: 2 }}>
-            {SelectProducts.length === 0 ? (
-              <Typography align="center" color="text.secondary" sx={{ mt: 4 }}>
-                Cart is empty
-              </Typography>
-            ) : (
-              <Table size="small">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>#</TableCell>
-                    <TableCell>Item</TableCell>
-                    <TableCell align="right">Qty</TableCell>
-                    <TableCell align="right">Price</TableCell>
-                    <TableCell> ''</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {SelectProducts.map((item, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{index + 1}</TableCell>
-                      <TableCell sx={{ maxWidth: 100, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        {item.title}
-                      </TableCell>
-                      <TableCell align="right">
-                        <TextField
-                          type="number"
-                          value={item.quantity}
-                          onChange={(e) => quantityChange(e, index)}
-                          size="small"
-                          sx={{ width: 70 }}
-                          inputProps={{ min: 1 }}
-                        />
-                      </TableCell>
-                      <TableCell align="right">
-                        <TextField
-                          type="number"
-                          value={calculateTotalPrice(item, index, 'price')}
-                          onChange={(e) => defaultValue(e, index)}
-                          size="small"
-                          sx={{ width: 90 }}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <IconButton onClick={() => removeItemByIndex(index)} size="small">
-                          <CloseIcon fontSize="small" />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
-          </Box>
-        </Paper>
-      </Grid>
+    };
 
-      {/* Totals Section */}
-      <Grid item xs={12}>
-        <Paper sx={{ p: 2 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={3}>
-              <TextField
-                label="Change"
-                type="number"
-                fullWidth
-                variant="outlined"
-                onChange={priceCHange}
-                InputLabelProps={{ shrink: true }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Box sx={{ 
-                p: 1.5,
-                border: 1,
-                borderColor: 'divider',
-                borderRadius: 1,
-                textAlign: 'center'
-              }}>
-                <Typography variant="subtitle2">Total</Typography>
-                <Typography variant="h6">Rs.{calculateTotal()}</Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Box sx={{ 
-                p: 1.5,
-                border: 1,
-                borderColor: 'divider',
-                borderRadius: 1,
-                textAlign: 'center'
-              }}>
-                <Typography variant="subtitle2">Return</Typography>
-                <Typography variant="h6">
-                  Rs.{ChangeValue > 0 ? ChangeValue - calculateTotal() : 0}
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Stack spacing={1}>
-              <div style={{ display: 'none' }}>
-                          <ComponentToPrint
-                            calculateTotal={calculateTotal()}
-                            SelectProducts={SelectProducts}
-                            ref={componentRef}
-                          />
-                        </div>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={addBIll}
-                  fullWidth
-                  startIcon={<PrintIcon />}
-                >
-                  Print
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={addBIllwithoutPrint}
-                  fullWidth
-                >
-                  Save Without Print
-                </Button>
-              </Stack>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Grid>
-    </Grid>
-  </Container>
-</StyledRoot>
-    </>
-  );
+    const priceCHange = (e, index) => {
+        setChangeValue(e.target.value)
+    };
+
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
+
+    const handle = (e) => {
+        // e.preventDefault();
+
+        handlePrint()
+    }
+
+    const addBIllwithoutPrint = (e) => {
+        e.preventDefault()
+        const currentDate = new Date();
+        const options = {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            // hour: '2-digit',
+            // minute: '2-digit',
+            // second: '2-digit',
+            timeZone: 'Asia/Karachi', // PKT time zone
+        };
+        const formattedTime = new Intl.DateTimeFormat('en-US', options).format(currentDate);
+        console.log(formattedTime)
+        if (calculateTotal() && SelectProducts) {
+
+            fetch(`http://51.20.84.249/api/posts`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "totalAmount": calculateTotal(),
+                    "Items": SelectProducts,
+                    "date": formattedTime.toString(),
+                })
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    setSelectProducts([])
+                    setChangeValue(0)
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    };
+
+    const addBIll = (e) => {
+        e.preventDefault()
+        const currentDate = new Date();
+        const options = {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            // hour: '2-digit',
+            // minute: '2-digit',
+            // second: '2-digit',
+            timeZone: 'Asia/Karachi', // PKT time zone
+        };
+        const formattedTime = new Intl.DateTimeFormat('en-US', options).format(currentDate);
+        console.log(formattedTime)
+        handle()
+
+        if (calculateTotal() && SelectProducts) {
+
+            fetch(`http://51.20.84.249/api/posts`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "totalAmount": calculateTotal(),
+                    "Items": SelectProducts,
+                    "date": formattedTime.toString(),
+                })
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    setSelectProducts([])
+                    setChangeValue(0)
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    };
+
+
+    const resetAll = () => {
+        setSelectProducts([])
+        setChangeValue(0)
+    }
+
+    return (
+        <>
+            <StyledRoot>
+                <Container maxWidth="lg">
+                    <Box sx={{ width: '100%' }}>
+                        <Grid container rowSpacing={1} spacing={1} style={{ height: '100vh', backgroundColor: 'lightgreen' }}>
+                            <Grid item spacing={2} rowSpacing={1} xs={8} style={{ backgroundColor: 'lightgreen', height: '50vh' }}>
+                                <div style={{ height: '316px', overflowY: 'auto', background: 'white' }}>
+                                    <Item>
+                                        {AllData && AllData.map((item) => {
+                                            return (
+                                                item.type === SelectedTitle ? (
+                                                    <Button variant="contained" color="success" onClick={() => addItem(item)} style={{ marginBottom: '8px', padding: '10px', marginLeft: '8px', fontSize: '16px' }}>
+                                                        {item.title}
+                                                    </Button>) : null
+                                            )
+                                        })}
+                                    </Item>
+                                </div>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Item>
+                                    <div style={{ height: '300px', overflowY: 'auto' }}>
+                                        <a href='#' onClick={resetAll}>Reset All</a>
+
+                                        <table className="table table-sm table-dark">
+                                            <thead>
+                                                <tr>
+                                                    <th className="col">#</th>
+                                                    <th className="col">Title</th>
+                                                    <th className="col">Quantity</th>
+                                                    <th className="col">Price</th>
+                                                    <th className="col">clear</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {SelectProducts && SelectProducts?.map((item, index) => {
+                                                    return (
+                                                        <tr>
+                                                            <th className="col">{index + 1}</th>
+                                                            <td>{item.title}</td>
+                                                            <td><input type='number' name='quantity' style={{ width: '40px', textAlign: 'center' }} defaultValue={item.quantity} onChange={(e) => quantityChange(e, index)} /></td>
+                                                            <td>
+                                                                {calculateTotalPrice(item, index, 'price')}
+
+                                                                {/* <input type='text' name="price" style={{ width: '80px', textAlign: 'center' }} defaultValue={calculateTotalPrice(item, index, 'price')} maxLength={3} max={3} /> */}
+                                                            </td>
+                                                            <td style={{ cursor: 'pointer' }} ><Button style={{ color: 'white' }} onClick={() => removeItemByIndex(index)}>X</Button></td>
+
+                                                        </tr>
+                                                    )
+                                                })}
+
+
+
+                                            </tbody>
+                                        </table>
+                                        {SelectProducts.length < 1 && <div style={{ textAlign: 'center' }}> <h6>Cart is empty</h6></div>}
+
+
+                                    </div>
+                                </Item>
+                            </Grid>
+                            <Grid item xs={4} maxWidth={200} style={{ backgroundColor: 'lightgreen' }}>
+                                <Item>
+                                    <Stack direction="column" spacing={2} mb={2}>
+                                        {name && name.map((item => {
+                                            return (
+                                                <Fab variant="extended" onClick={() => setSelectedTitle(item.title)}>
+                                                    <NavigationIcon sx={{ mr: 1 }} />
+                                                    {item.title}
+                                                </Fab>
+                                            )
+                                        }))}
+
+                                        {
+                                        }
+                                    </Stack>
+
+                                </Item>
+                            </Grid>
+                            <Grid item xs={8} style={{ backgroundColor: 'lightgreen' }}>
+                                <Item>
+
+                                    <Box
+                                        component="form"
+                                        sx={{
+                                            '& > :not(style)': { m: 1, width: '20ch' },
+                                        }}
+                                        noValidate
+                                        className='totalBox'
+                                        autoComplete="off"
+                                    >
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', width: 'auto' }}>
+
+                                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+
+                                                <div className='lableTotal'> Change</div>
+                                                <input type='number' className='change' onChange={priceCHange} />
+
+                                            </div>
+                                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+
+                                                <div className='lableTotal'> Total</div>
+                                                <div className='totalButton'>
+                                                    Rs.{calculateTotal()}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', width: 'auto' }}>
+                                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+
+                                                <div className='lableTotal'> Return</div>
+
+                                                <div className='totalReturn'>
+
+                                                    Rs.{ChangeValue > 0 ? ChangeValue - calculateTotal() : 0}
+                                                </div>
+                                            </div>
+                                            <div style={{ display: 'flex', flexDirection: 'column' }} className='mt-2'>
+                                                <div style={{ display: 'none' }}>
+                                                    <ComponentToPrint calculateTotal={calculateTotal()} SelectProducts={SelectProducts} ref={componentRef} />
+                                                </div>
+                                                <button onClick={(e) => addBIllwithoutPrint(e)} className='btn btn-primary mb-2' >WithOut Print</button>
+                                                {/* <div className='lableTotal'> Return</div> */}
+                                                <button className='print' type='button' onClick={(e) => addBIll(e)}>
+                                                    Print
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </Box>
+
+                                </Item>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Container>
+            </StyledRoot>
+        </>
+    );
 }

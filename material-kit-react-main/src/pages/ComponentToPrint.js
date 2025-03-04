@@ -13,14 +13,18 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
             <div ref={ref} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: '12px' }}>
                 <h2 style={{ fontWeight: '700' }}>The Hunger Bites</h2>
                 {/* <img className='mainHeading' alt='logo' width={100} height={100} src={logo} /> */}
-                ---------------------- ----------------------
-                <span>{formattedDateTime}</span>
-                ---------------------- ----------------------
+                {' '}   {' '} <small style={{wordBreak:'break-word',paddingLeft:'10px',paddingRight:'10px',display: 'flex', alignItems: 'center',justifyContent:'center',textAlign:'center'}}>Main market opposite nadra office main zarrar shaheed road jorry pull lahore</small> {' '} {' '}
+                <span>#03298550193</span>
+
+                --------------------------------------------
+                {/* <span>Order # </span>
+                -------------------------------------------- */}
+
                 <table>
                     <thead>
                         <tr>
                             <th style={{ fontWeight: '600' }}>Title</th>
-                            <th>Quantity</th>
+                            <th style={{ textAlign: 'center'}}>Qty</th>
                             <th>Price</th>
                         </tr>
                     </thead>
@@ -28,8 +32,8 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                         {props.SelectProducts && props.SelectProducts.map((item) => {
                             return (
                                 <tr>
-                                    <td>{item.title}</td>
-                                    <td style={{ textAlign: 'center' }}>{item.quantity}</td>
+                                    <td style={{ wordBreak:'break-word',width:'70%'}}>{item.title}</td>
+                                    <td style={{ textAlign: 'center',wordBreak:'break-word'}}>{item.quantity}</td>
                                     <td>{item.price}</td>
                                 </tr>
                             )
