@@ -90,6 +90,30 @@ export default function LoginPage() {
       {
         title: 'Dips',
       },
+      {
+        title: 'Chicken Burgers',
+      },
+      {
+        title: 'Appetizer',
+      },
+      {
+        title: 'Wraps',
+      },
+       {
+        title: 'Sandwich',
+      },
+      {
+        title: 'Beef Burger',
+      },
+      {
+        title: 'Platter',
+      },
+      {
+        title: 'Shawarma',
+      },
+      {
+        title: 'Meals',
+      },
     
     ]);
 
@@ -319,7 +343,7 @@ export default function LoginPage() {
                                     </div>
                                 </Item>
                             </Grid>
-                            <Grid item xs={4} maxWidth={200} style={{ backgroundColor: 'lightgreen' }}>
+                            <Grid item xs={4} maxWidth={200} style={{ backgroundColor: 'lightgreen',minHeight:'340px',overflow:'scroll',maxHeight:'200px' }}>
                                 <Item>
                                     <Stack direction="column" spacing={2} mb={2}>
                                         {name && name.map((item => {

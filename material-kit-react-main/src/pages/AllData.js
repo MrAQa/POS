@@ -398,7 +398,227 @@ const AllData = [
           "price": "650",
           "type": "Shakes",
           "quantity": 1
-        }
+        },
+
+        
+          {
+            "title": "Zingerato",
+            "price": "350",
+            "type": "Chicken Burgers",
+            "quantity": 1
+          },
+          {
+            "title": "Grilled Chicken",
+            "price": "380",
+            "type": "Chicken Burgers",
+            "quantity": 1
+          },
+          {
+            "title": "Crumbed Fillet",
+            "price": "450",
+            "type": "Chicken Burgers",
+            "quantity": 1
+          },
+          {
+            "title": "Cheese Monster",
+            "price": "550",
+            "type": "Chicken Burgers",
+            "quantity": 1
+          },
+          {
+            "title": "Pizza Burger",
+            "price": "450",
+            "type": "Chicken Burgers",
+            "quantity": 1
+          },
+          {
+            "title": "Special Patty Burger",
+            "price": "280",
+            "type": "Chicken Burgers",
+            "quantity": 1
+          },
+          {
+            "title": "The Beastly Burger Special",
+            "price": "380",
+            "type": "Chicken Burgers",
+            "quantity": 1
+          },
+          {
+            "title": "Dynamite Hot Crispy",
+            "price": "430",
+            "type": "Chicken Burgers",
+            "quantity": 1
+          },
+          {
+            "title": "Buffalo Wings",
+            "price": "450",
+            "type": "Appetizer",
+            "quantity": 1
+          },
+          {
+            "title": "Fried Wings",
+            "price": "350",
+            "type": "Appetizer",
+            "quantity": 1
+          },
+          {
+            "title": "Mozzarella Sticks",
+            "price": "400",
+            "type": "Appetizer",
+            "quantity": 1
+          },
+          {
+            "title": "Chicken Strips",
+            "price": "400",
+            "type": "Appetizer",
+            "quantity": 1
+          },
+          {
+            "title": "Crispy HB Special regular",
+            "price": "400",
+            "type": "Wraps",
+            "quantity": 1
+          },
+          {
+            "title": "Crispy HB Special Jumbo",
+            "price": "600",
+            "type": "Wraps",
+            "quantity": 1
+          },
+          {
+            "title": "Crispy Cheese Melt",
+            "price": "550",
+            "type": "Wraps",
+            "quantity": 1
+          },
+          {
+            "title": "HB Signature (peri peri)",
+            "price": "450",
+            "type": "Wraps",
+            "quantity": 1
+          },
+          {
+            "title": "Malai Boti Wrap",
+            "price": "450",
+            "type": "Wraps",
+            "quantity": 1
+          },
+          {
+            "title": "Cocktail HB Special",
+            "price": "600",
+            "type": "Sandwich",
+            "quantity": 1
+          },
+          {
+            "title": "Fried Crunch Sandwich",
+            "price": "450",
+            "type": "Sandwich",
+            "quantity": 1
+          },
+          {
+            "title": "Club Sandwich",
+            "price": "350",
+            "type": "Sandwich",
+            "quantity": 1
+          },
+          {
+            "title": "Grill Sandwich",
+            "price": "450",
+            "type": "Sandwich",
+            "quantity": 1
+          },
+          {
+            "title": "Smash Burger Single",
+            "price": "500",
+            "type": "Beef Burger",
+            "quantity": 1
+          },
+          {
+            "title": "Smash Burger Double",
+            "price": "650",
+            "type": "Beef Burger",
+            "quantity": 1
+          },
+          {
+            "title": "Butter Oasis Burger",
+            "price": "800",
+            "type": "Beef Burger",
+            "quantity": 1
+          },
+          {
+            "title": "Shroom Melt Burger",
+            "price": "800",
+            "type": "Beef Burger",
+            "quantity": 1
+          },
+          {
+            "title": "Arabian Beef Platter",
+            "price": "800",
+            "type": "Platter",
+            "quantity": 1
+          },
+          {
+            "title": "Hunger Bites Special Platter",
+            "price": "800",
+            "type": "Platter",
+            "quantity": 1
+          },
+          {
+            "title": "Grill Platter",
+            "price": "500",
+            "type": "Platter",
+            "quantity": 1
+          },
+          {
+            "title": "Chicken Shawarma Platter",
+            "price": "500",
+            "type": "Platter",
+            "quantity": 1
+          },
+          {
+            "title": "Grilled Bird Shawarma",
+            "price": "400",
+            "type": "Shawarma",
+            "quantity": 1
+          },
+          {
+            "title": "Chicken Shawarma",
+            "price": "280",
+            "type": "Shawarma",
+            "quantity": 1
+          },
+          {
+            "title": "Zinger Shawarma",
+            "price": "300",
+            "type": "Shawarma",
+            "quantity": 1
+          },
+          {
+            "title": "Grill Shawarma",
+            "price": "300",
+            "type": "Shawarma",
+            "quantity": 1
+          },
+          {
+            "title": "375ml Drink With S Fries",
+            "price": "220",
+            "type": "Meals",
+            "quantity": 1
+          },
+          {
+            "title": "500ml Drink With M Fries",
+            "price": "320",
+            "type": "Meals",
+            "quantity": 1
+          },
+          {
+            "title": "Shake With Fries",
+            "price": "520",
+            "type": "Meals",
+            "quantity": 1
+          }
+        
+        
       ]
       
   
