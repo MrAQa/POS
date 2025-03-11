@@ -214,7 +214,7 @@ app.get('/api/sales', async (req, res) => {
             const posts = await Post.find(filter);
             return posts.reduce((acc, post) => {
                 post.Items.forEach(item => {
-                    if (['Pizza', 'Deals', 'Pasta', 'Fries','Drinks','Shakes','Dips','Desserts'].includes(item.type)) {
+                    if (['Pizza', 'Deals', 'Pasta', 'Fries','Drinks','Shakes','Dips','Desserts','Meals','Shawarma','Platter','Beef Burger','Sandwich','Wraps','Appetizer','Chicken Burgers'].includes(item.type)) {
                         acc += item.price * item.quantity;
                     }
                 });
