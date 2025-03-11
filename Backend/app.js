@@ -33,6 +33,42 @@ app.post('/api/posts', (req, res) => {
         });
 });
 
+app.get('/api/posts/daily-count', (req, res) => {
+    Post.aggregate([
+        {
+            $group: {
+                _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+                totalPosts: { $sum: 1 }
+            }
+        },
+        { $sort: { _id: 1 } } // Sorting by date ascending
+    ])
+    .then(result => {
+        res.status(200).json(result);
+    })
+    .catch(error => {
+        console.error('Error retrieving daily counts:', error);
+        res.status(500).json({ error: 'Error fetching daily counts' });
+    });
+});
+app.get('/api/posts', (req, res) => {
+    const { startDate, endDate } = req.query;
+    const query = {};
+
+    if (startDate && endDate) {
+        query.date = { $gte: new Date(startDate), $lte: new Date(endDate) };
+    }
+
+    Post.find(query)
+        .sort({date: -1})
+        .then(posts => {
+            res.status(200).json(posts);
+        })
+        .catch(error => {
+            console.error('Error retrieving posts:', error);
+            res.status(500).json({ error: 'Error fetching the posts' });
+        });
+});
 
 
 app.get('/api/posts', async (req, res) => {
