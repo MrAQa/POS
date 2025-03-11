@@ -402,6 +402,13 @@ const AllData = [
 
         
           {
+            "title": "Zinger Burger",
+            "price": "200",
+            "type": "Chicken Burgers",
+            "quantity": 1
+          },
+          
+          {
             "title": "Zingerato",
             "price": "350",
             "type": "Chicken Burgers",
@@ -470,6 +477,12 @@ const AllData = [
           {
             "title": "Chicken Strips",
             "price": "400",
+            "type": "Appetizer",
+            "quantity": 1
+          },
+          {
+            "title": "Extra Bread",
+            "price": "30",
             "type": "Appetizer",
             "quantity": 1
           },
@@ -572,6 +585,18 @@ const AllData = [
           {
             "title": "Chicken Shawarma Platter",
             "price": "500",
+            "type": "Platter",
+            "quantity": 1
+          },
+          {
+            "title": "Platter 1",
+            "price": "700",
+            "type": "Platter",
+            "quantity": 1
+          },
+          {
+            "title": "Platter 2",
+            "price": "1300",
             "type": "Platter",
             "quantity": 1
           },
