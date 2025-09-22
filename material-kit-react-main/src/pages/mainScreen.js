@@ -62,58 +62,64 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 export default function LoginPage() {
     const mdUp = useResponsive('up', 'md');
-    const [SelectedTitle, setSelectedTitle] = useState('Food')
+    const [SelectedTitle, setSelectedTitle] = useState('Pizza')
     const [ChangeValue, setChangeValue] = useState(0)
     const [SelectProducts, setSelectProducts] = useState([])
     const [name, setName] = React.useState([
       {
         title: 'Pizza',
+        name:'Food / طعام'
       },
-      {
-        title: "Pasta",
-      },
+    //   {
+    //     title: "Pasta",
+    //   },
       {
         title: "Drinks",
+        name:'Sweets / حلويات'
+
       },
-      {
-        title: "Fries",
-      },
-      {
-        title: "Shakes",
-      },
+    //   {
+    //     title: "Fries",
+    //   },
+    //   {
+    //     title: "Shakes",
+    //   },
       {
         title: 'Deals',
+        name:'deep-fried foods /طعام مقلي بعمق'
+
       },
-      {
-        title: 'Desserts',
-      },
-      {
-        title: 'Dips',
-      },
-      {
-        title: 'Chicken Burgers',
-      },
-      {
-        title: 'Appetizer',
-      },
+    //   {
+    //     title: 'Desserts',
+    //   },
       {
         title: 'Wraps',
+        name: 'Drinks',
       },
-       {
-        title: 'Sandwich',
-      },
-      {
-        title: 'Beef Burger',
-      },
-      {
-        title: 'Platter',
-      },
-      {
-        title: 'Shawarma',
-      },
-      {
-        title: 'Meals',
-      },
+    //   {
+    //     title: 'Chicken Burgers',
+    //   },
+    //   {
+    //     title: 'Appetizer',
+    //   },
+    //   {
+    //     title: 'Wraps',
+    //   },
+    //    {
+    //     title: 'Sandwich',
+    //   },
+    //   {
+    //     title: 'Beef Burger',
+    //   },
+    //   {
+    //     title: 'Platter',
+    //   },
+    //   {
+    //     title: 'Shawarma',
+    //   },
+    //   {
+    //     title: 'Meals',
+    //   },
     
     ]);
 
@@ -181,6 +187,26 @@ export default function LoginPage() {
 
     };
 
+       const pricChange = (e, index) => {
+        console.log(e.target.value)
+        if (e.target.value) {
+
+            const newQuantity = parseFloat(e.target.value);
+
+            const updatedProducts = [...SelectProducts];
+            updatedProducts[index].price = newQuantity;
+            console.log(newQuantity)      
+                  setSelectProducts(updatedProducts);
+        }
+        else {
+            const newQuantity = 0
+
+            const updatedProducts = [...SelectProducts];
+            updatedProducts[index].price = newQuantity;
+            setSelectProducts(updatedProducts);
+        }
+
+    };
     const priceCHange = (e, index) => {
         setChangeValue(e.target.value)
     };
@@ -323,10 +349,9 @@ export default function LoginPage() {
                                                             <td>{item.title}</td>
                                                             <td><input type='number' name='quantity' style={{ width: '40px', textAlign: 'center' }} defaultValue={item.quantity} onChange={(e) => quantityChange(e, index)} /></td>
                                                             <td>
-                                                                {calculateTotalPrice(item, index, 'price')}
+                                                                {/* {calculateTotalPrice(item, index, 'price')} */}
 
-                                                                {/* <input type='text' name="price" style={{ width: '80px', textAlign: 'center' }} defaultValue={calculateTotalPrice(item, index, 'price')} maxLength={3} max={3} /> */}
-                                                            </td>
+                                                                <input type='text' name="price" style={{ width: '80px', textAlign: 'center' }} defaultValue={calculateTotalPrice(item, index, 'price')} onChange={(e)=>pricChange(e,index)} maxLength={3} max={3} />                                                             </td>
                                                             <td style={{ cursor: 'pointer' }} ><Button style={{ color: 'white' }} onClick={() => removeItemByIndex(index)}>X</Button></td>
 
                                                         </tr>
@@ -350,7 +375,7 @@ export default function LoginPage() {
                                             return (
                                                 <Fab variant="extended" onClick={() => setSelectedTitle(item.title)}>
                                                     <NavigationIcon sx={{ mr: 1 }} />
-                                                    {item.title}
+                                                    {item.name}
                                                 </Fab>
                                             )
                                         }))}
@@ -385,7 +410,7 @@ export default function LoginPage() {
 
                                                 <div className='lableTotal'> Total</div>
                                                 <div className='totalButton'>
-                                                    Rs.{calculateTotal()}
+                                                    SR.{calculateTotal()}
                                                 </div>
                                             </div>
                                         </div>
